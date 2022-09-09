@@ -5,6 +5,8 @@
 Vector2 SeparationRule::computeForce(const std::vector<Boid*>& neighborhood, Boid* boid) {
     //Try to avoid boids too close
     Vector2 separatingForce = Vector2::zero();
+    Vector2 totalPosition = Vector2::zero();
+    Vector2 centerOfMass = Vector2::zero();
 
     float desiredDistance = desiredMinimalDistance;
 
@@ -12,8 +14,12 @@ Vector2 SeparationRule::computeForce(const std::vector<Boid*>& neighborhood, Boi
     if (!neighborhood.empty()) {
         Vector2 position = boid->transform.position;
         int countCloseFlockmates = 0;
-
-
+        for (int i = 0; i < neighborhood.size(); i++)
+        {
+            Vector2 temp = neighborhood[i]->getPosition();
+            totalPosition += temp;
+        }
+        
     }
 
     separatingForce = Vector2::normalized(separatingForce);
