@@ -6,7 +6,8 @@
 Vector2 WindRule::computeForce(const std::vector<Boid*>& neighborhood, Boid* boid) {
     // todo: add a wind force here
     // hint: use the windAngle variable
-    Vector2 windForce = Vector2::zero();
+    Vector2 windForce = Vector2::getVector2FromRadian(windAngle);
+    windForce = Vector2::normalized(windForce);
 
     return windForce;
 }
