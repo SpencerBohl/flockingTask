@@ -11,11 +11,37 @@ Vector2 BoundedAreaRule::computeForce(const std::vector<Boid*>& neighborhood, Bo
     Vector2 size = this->world->engine->window->size();
     float distance = desiredDistance;
 
+    //Find the boundry lines of the box
     float minX = distance;
     float maxX = size.x - distance;
     float minY = distance;
     float maxY = size.y - distance;
 
+    //Get the position of the boid
+    Vector2 position = boid->getPosition();
+    Vector2 tempForce = Vector2::zero();
+
+    if (position.x <= minX)
+    {
+        tempForce = Vector2(Vector2::getDistance(position, Vector2(minX, position.y)), 0);
+        force += tempForce;
+    }
+    else if (position.x >= maxX)
+    {
+        tempForce = Vector2(Vector2::getDistance(position, Vector2(maxX, position.y)), 0);
+        force += (tempForce * -1);
+    }
+    if (position.y <= minY)
+    {
+        tempForce = Vector2(0,Vector2::getDistance(position, Vector2(position.x, minY)));
+        force += tempForce;
+    }
+    else if (position.y >= maxY)
+    {
+        tempForce = Vector2(0, Vector2::getDistance(position, Vector2(position.x, maxY)));
+        force += (tempForce * -1);
+    }
+    force = Vector2::normalized(force);
     return force;
 }
 
